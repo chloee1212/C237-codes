@@ -35,6 +35,8 @@
             <th width="100">Student Image</th>
             <th width="100">Date of Birth</th>
             <th width="100">Contact</th>
+            <th width="50">Edit</th>
+            <th width="50">Delete</th>
           </tr>
       </thead>
       <tbody>
@@ -44,6 +46,11 @@
             <td><img src="<%= students[i].image %>" width="20%" alt="<%= students[i].name %>"></td>
             <td><%= students[i].dob %></td>
             <td><%= students[i].contact %></td>
+
+            <!-- Edit button -->
+            <td><a href="/editStudent/<%= students[i].studentid %>" class="btn btn-primary btn-sm">Edit</a></td>
+            <!-- Delete button -->  
+            <td><a href="/deleteStudent/<%= students[i].studentid %>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this student?')">Delete</a></td>
           </tr>
         <% } %>
       </tbody>

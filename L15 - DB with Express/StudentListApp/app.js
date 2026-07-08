@@ -98,6 +98,54 @@ app.post('/addStudent', (req, res) => {
     });
 });
 
+// Display Edit Student page and handle Edit Student form submission based on the student ID
+app.get('/editStudent/:id', (req, res) => {
+    const studentid = req.params.id;
+    const sql = 'SELECT * FROM student WHERE studentid = ?';
+    // Fetch data from MySQL based on the product ID
+    connection.query(sql, [studentid], (error, results) => {
+        if (error) {
+            console.error('Database query error:', error.message);
+            return res.send('Error Retrieving student');
+        }
+        if (results.length > 0) {
+            res.render('editStudent', { student: results[0] });
+        } else {
+            res.send('Student not found');
+        }
+    });
+});
+
+app.post('/editStudent/:id', (req, res) => {
+    const studentid = req.params.id;
+    const { name, dob, contact } = req.body;
+    const sql = `
+        UPDATE student
+        SET name = ?, dob = ?, contact = ?
+        WHERE studentid = ?`;
+    connection.query(sql, [name, dob, contact, studentid], (error, results) => {
+        if (error) {
+            console.error(error);
+            return res.send('Error updating student');
+        }
+        res.redirect('/');
+    });
+});
+
+app.get('/deleteStudent/:id', (req, res) => {
+    const studentid = req.params.id;
+    const sql = 'DELETE FROM student WHERE studentid = ?';
+
+    connection.query(sql, [studentid], (error, results) => {
+        if (error) {
+            console.error('Error deleting student:', error);
+            return res.send('Error deleting student');
+        } else {
+            res.redirect('/');
+        }
+    });
+});
+
 // Start server
 const PORT = process.env.PORT || 3000;
 
