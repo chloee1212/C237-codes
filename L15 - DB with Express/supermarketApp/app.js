@@ -83,6 +83,47 @@ app.post('/addProduct', (req, res) => {
     });
 });
 
+// Display Edit Product page and handle Edit Product form submission based on the product ID
+
+app.get('/editProduct/:id', (req, res) => {
+    const productId = req.params.id;
+    const sql = 'SELECT * FROM products WHERE productId = ?';
+    // Fetch data from MySQL based on the product ID
+    connection.query(sql, [productId], (error, results) => {
+        if (error) {
+            console.error('Database query error:', error.message);
+            return res.send('Error retrieving product by ID');
+        }
+        // Check if any product with the given ID was found
+        if (results.length > 0) {
+            // Render HTML page with the product data
+            res.render('editProduct', { product: results[0] });
+        } else {
+            // If no product with the given ID was found, render a 404 page or handle it accordingly
+            res.send('Product not found');
+        }
+    });
+});
+
+
+app.post('/editProduct/:id', (req, res) => {
+    const productId = req.params.id;
+    // Extract product data from the request body
+    const { name, quantity, price } = req.body;
+    const sql = 'UPDATE products SET productName = ? , quantity = ?, price = ? WHERE productId = ?';
+    // Insert the new product into the database
+    connection.query(sql, [name, quantity, price, productId], (error, results) => {
+        if (error) {
+            // Handle any error that occurs during the database operation
+            console.error("Error updating product:", error);
+            res.send('Error updating product');
+        } else {
+            // Send a success response
+            res.redirect('/');
+        }
+    });
+});
+
 // Start server
 const PORT = process.env.PORT || 3000;
 
