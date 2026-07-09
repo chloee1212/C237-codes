@@ -44,7 +44,7 @@
 
           <div class="card-body">
 
-            <form action="/addProduct" method="POST">
+            <form action="/addProduct" method="POST" enctype="multipart/form-data">
 
               <div class="mb-3">
                 <label for="name" class="form-label">
@@ -77,7 +77,8 @@
                   Image URL
                 </label>
 
-                <input type="text" class="form-control" id="image" name="image" placeholder="Enter image URL" required>
+                <!-- <input type="text" class="form-control" id="image" name="image" placeholder="Enter image URL" required> -->
+                <input type="file" class="form-control" id="image" name="image" accept="image/*" required>
               </div>
 
               <div class="d-grid gap-2">

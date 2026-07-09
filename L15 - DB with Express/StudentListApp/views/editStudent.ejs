@@ -33,94 +33,119 @@
 
   <!-- Update Form -->
   <div class="container mt-5">
-
     <div class="row justify-content-center">
-
       <div class="col-md-6">
 
         <% if (student) { %>
 
-          <div class="card shadow">
+        <div class="card shadow">
 
-            <div class="card-header bg-secondary text-white">
-              <h3 class="mb-0">Update Student</h3>
-            </div>
+          <div class="card-header bg-warning">
+            <h3 class="mb-0">Update Student</h3>
+          </div>
 
-            <div class="card-body">
+          <div class="card-body">
 
-              <form action="/editStudent/<%= student.studentid %>" method="POST">
+            <form action="/editStudent/<%= student.studentid %>" method="POST" enctype="multipart/form-data">
 
-                <div class="mb-3">
-                  <label for="name" class="form-label">
-                    Student Name
-                  </label>
+              <!-- Student Name -->
+              <div class="mb-3">
+                <label for="name" class="form-label">Student Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  value="<%= student.name %>"
+                  required>
+              </div>
 
-                  <input type="text" class="form-control" id="name" name="name" value="<%= student.name %>" required>
-                </div>
+              <!-- Date of Birth -->
+              <div class="mb-3">
+                <label for="dob" class="form-label">Date of Birth</label>
+                <input
+                  type="date"
+                  class="form-control"
+                  id="dob"
+                  name="dob"
+                  value="<%= student.dob.toISOString().split('T')[0] %>"
+                  required>
+              </div>
 
-                <div class="mb-3">
-                  <label for="dob" class="form-label">
-                    Date of Birth
-                  </label>
+              <!-- Contact -->
+              <div class="mb-3">
+                <label for="contact" class="form-label">Contact</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="contact"
+                  name="contact"
+                  value="<%= student.contact %>"
+                  required>
+              </div>
 
-                  <input type="date" class="form-control" id="dob" name="dob"
-                    value="<%= student.dob.toISOString().split('T')[0] %>" required>
-                </div>
+              <!-- Current Image Filename -->
+              <div class="mb-3">
+                <label class="form-label">Current Image</label>
 
-                <div class="mb-3">
-                  <label for="contact" class="form-label">
-                    Contact
-                  </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="currentImage"
+                  value="<%= student.image %>"
+                  readonly>
+              </div>
 
-                  <input type="text" class="form-control" id="contact" name="contact" value="<%= student.contact %>"
-                    required>
-                </div>
+              <!-- Display Current Image -->
+              <div class="mb-3 text-center">
+                <img
+                  src="/images/<%= student.image %>"
+                  alt="<%= student.name %>"
+                  class="img-fluid rounded border"
+                  style="max-height:200px;">
+              </div>
 
-                <div class="mb-3">
-                  <label class="form-label">
-                    Current Image
-                  </label>
+              <!-- Upload New Image -->
+              <div class="mb-3">
+                <label for="image" class="form-label">New Image</label>
+                <input
+                  type="file"
+                  class="form-control"
+                  id="image"
+                  name="image"
+                  accept="image/*">
+              </div>
 
-                  <div class="text-center">
-                    <img src="<%= student.image %>" alt="<%= student.name %>" class="img-fluid rounded border"
-                      style="max-height: 200px;">
-                  </div>
-                </div>
+              <!-- Buttons -->
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-warning">
+                  Update Student
+                </button>
 
+                <a href="/" class="btn btn-secondary">
+                  Cancel
+                </a>
+              </div>
 
-                <div class="d-grid gap-2">
-
-                  <button type="submit" class="btn btn-warning">
-                    Update Student
-                  </button>
-
-                  <a href="/" class="btn btn-secondary">
-                    Cancel
-                  </a>
-
-                </div>
-
-              </form>
-
-            </div>
+            </form>
 
           </div>
 
-          <% } else { %>
+        </div>
 
-            <div class="alert alert-warning text-center">
-              <h5>No student found.</h5>
-              <a href="/" class="btn btn-secondary mt-3">
-                Back to Home
-              </a>
-            </div>
+        <% } else { %>
 
-            <% } %>
+        <div class="alert alert-warning text-center">
+          <h5>No student found.</h5>
+          <a href="/" class="btn btn-secondary mt-3">
+            Back to Home
+          </a>
+        </div>
+
+        <% } %>
 
       </div>
-
     </div>
-
   </div>
 
 </body>

@@ -43,7 +43,7 @@
         <% for(let i=0; i < students.length; i++) { %>
           <tr>
             <td><a href="/student/<%=students[i].studentid%>"><%= students[i].name %></a></td>
-            <td><img src="<%= students[i].image %>" width="20%" alt="<%= students[i].name %>"></td>
+            <td><img src="/images/<%= students[i].image %>" width="20%" alt="<%= students[i].name %>"></td>
             <td><%= students[i].dob %></td>
             <td><%= students[i].contact %></td>
 
